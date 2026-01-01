@@ -1,0 +1,19 @@
+﻿<h3>Enroll Student</h3>
+
+<form method="post">
+    <select name="courseId">
+        @foreach (var c in ViewBag.Courses)
+        {
+            <option value="@c.CourseID">@c.CourseCode</option>
+        }
+    </select>
+
+    <select name="studentId">
+        @foreach (var s in ViewBag.Students)
+        {
+            <option value="@s.StudentID">@s.MatricNo</option>
+        }
+    </select>
+
+    <button type="submit">Enroll</button>
+</form>

@@ -1,0 +1,16 @@
+﻿@model List<SecureCampusApp.Models.AuditLog>
+
+<h2>Audit Logs</h2>
+
+<table class="table table-striped">
+@foreach (var log in Model)
+{
+    <tr>
+        <td>@log.Timestamp</td>
+        <td>@log.ActorRole</td>
+        <td>@log.Action</td>
+        <td>@log.TargetEntity</td>
+        <td>@log.Status</td>
+    </tr>
+}
+</table>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h4 class="text-primary mb-3">Update Personal Information</h4>
+
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alert alert-success">
+                        @ViewBag.Success
+                    </div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Programme</label>
+                        <select name="Programme" class="form-select" required>
+                            <option value="">-- Select Programme --</option>
+                            <option value="BIT">BIT</option>
+                            <option value="BCS">BCS</option>
+                            <option value="BSE">BSE</option>
+                            <option value="BIS">BIS</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">IC Number</label>
+                        <input type="text" name="IC" class="form-control"
+                               placeholder="010101-01-0101" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea name="Address" class="form-control" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

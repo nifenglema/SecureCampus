@@ -1,0 +1,176 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    var role = Context.Session.GetString("Role");
+    var isLoggedIn = !string.IsNullOrEmpty(role);
+
+    // Default dashboard route
+    string dashController = "Home";
+    string dashAction = "Index";
+
+    if (role == "Admin")
+    {
+        dashController = "Admin";
+        dashAction = "Dashboard";
+    }
+    else if (role == "Lecturer")
+    {
+        dashController = "Lecturers";
+        dashAction = "Dashboard";
+    }
+    else if (role == "Student")
+    {
+        dashController = "Students";
+        dashAction = "Profile";   // Student lands on Profile
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SecureCampus</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-custom.css" asp-append-version="true" />
+</head>
+
+<body>
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+
+            <!-- BRAND → redirect to correct dashboard -->
+            <a class="navbar-brand fw-bold text-primary"
+               asp-controller="@dashController" asp-action="@dashAction">
+                SecureCampus
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="nav">
+
+                <!-- LEFT NAV -->
+                <ul class="navbar-nav me-auto">
+
+                    @if (isLoggedIn)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-controller="@dashController" asp-action="@dashAction">
+                                Dashboard
+                            </a>
+                        </li>
+
+                        @* STUDENT *@
+                        @if (role == "Student")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Students" asp-action="Profile">
+                                    My Profile
+                                </a>
+                            </li>
+                        }
+
+                        @* LECTURER *@
+                        @if (role == "Lecturer")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Lecturers" asp-action="Courses">
+                                    My Courses
+                                </a>
+                            </li>
+                        }
+
+                        @* ADMIN *@
+                        @if (role == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Admin" asp-action="Students">
+                                    Manage Students
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Admin" asp-action="Courses">
+                                    Manage Courses
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Admin" asp-action="AuditLogs">
+                                    Audit Logs
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+
+                <!-- RIGHT NAV -->
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                    @if (!isLoggedIn)
+                    {
+                        <li class="nav-item me-lg-2">
+                            <a class="btn btn-outline-primary"
+                               asp-controller="Auth" asp-action="Login">
+                                Login
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-primary"
+                               asp-controller="Auth" asp-action="Register">
+                                Register
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item me-lg-3">
+                            <span class="nav-link text-muted small">
+                                Role: <strong>@role</strong>
+                            </span>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Auth" asp-action="Logout">
+                                Logout
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- ================= CONTENT ================= -->
+    <main class="container mt-4">
+        @RenderBody()
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer bg-light text-center py-3 mt-5 border-top">
+        <div class="container">
+            <small class="text-muted">
+                © 2025 SecureCampus | Student Information Management System
+            </small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

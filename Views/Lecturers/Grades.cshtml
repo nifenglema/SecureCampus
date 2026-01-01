@@ -1,0 +1,40 @@
+﻿@model List<SecureCampusApp.Models.Grade>
+
+<h2>Grades</h2>
+
+@if (!Model.Any())
+{
+    <p>No enrollments available.</p>
+}
+else
+{
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Student ID</th>
+            <th>Course ID</th>
+            <th>Grade</th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var g in Model)
+        {
+            <tr>
+                <td>@g.StudentID</td>
+                <td>@g.CourseID</td>
+
+                <td>
+                    <form asp-action="SaveGrade" method="post">
+                        <input type="hidden" name="enrollmentId" value="@g.EnrollmentID" />
+
+                        <input type="text"
+                               name="gradeValue"
+                               value="@g.GradeValue"
+                               style="width:80px;" />
+
+                        <button type="submit">Save</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}

@@ -1,0 +1,75 @@
+﻿@model List<SecureCampusApp.Models.Course>
+
+@{
+    var lecturers = ViewBag.Lecturers as List<SecureCampusApp.Models.LecturerProfile>
+                    ?? new List<SecureCampusApp.Models.LecturerProfile>();
+}
+
+<h2 class="mb-3">Manage Courses</h2>
+
+<!-- ================= ADD COURSE ================= -->
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <form asp-action="CreateCourse" method="post" class="row g-2">
+            <div class="col-md-2">
+                <input name="CourseCode" class="form-control"
+                       placeholder="CSF101" required />
+            </div>
+
+            <div class="col-md-4">
+                <input name="CourseName" class="form-control"
+                       placeholder="Course Name" required />
+            </div>
+
+            <div class="col-md-4">
+                <select name="LecturerID" class="form-select" required>
+                    <option value="">-- Select Lecturer --</option>
+                    @foreach (var l in lecturers)
+                    {
+                        <option value="@l.LecturerID">
+                            @l.StaffNo (@l.Department)
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">Add Course</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ================= COURSE LIST ================= -->
+<table class="table table-striped table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>CourseID</th>
+            <th>CourseCode</th>
+            <th>CourseName</th>
+            <th>LecturerID</th>
+            <th style="width:120px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.CourseID</td>
+                <td>@c.CourseCode</td>
+                <td>@c.CourseName</td>
+                <td>@c.LecturerID</td>
+                <td>
+                    <a class="btn btn-sm btn-danger"
+                       asp-action="DeleteCourse"
+                       asp-route-id="@c.CourseID"
+                       onclick="return confirm('Delete this course?');">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-secondary" asp-action="Dashboard">Back</a>

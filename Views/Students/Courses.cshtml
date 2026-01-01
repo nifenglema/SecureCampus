@@ -1,0 +1,8 @@
+﻿<h3>My Courses</h3>
+
+<ul>
+@foreach (var c in Model)
+{
+    <li>@c.CourseCode - @c.CourseName</li>
+}
+</ul>

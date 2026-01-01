@@ -1,0 +1,82 @@
+﻿@model List<SecureCampusApp.Models.StudentProfile>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Student Management</h2>
+</div>
+
+<div class="card dashboard-card mb-4">
+    <div class="card-body">
+        <form asp-action="Create" method="post" class="row g-3">
+
+            <div class="col-md-2">
+                <input name="StudentID" class="form-control form-control-lg"
+                       placeholder="Student ID (S100)" required />
+            </div>
+
+            <div class="col-md-2">
+                <input name="UserID" class="form-control form-control-lg"
+                       placeholder="User ID (U100)" required />
+            </div>
+
+            <div class="col-md-2">
+                <input name="MatricNo" class="form-control form-control-lg"
+                       placeholder="Matric No" required />
+            </div>
+
+            <div class="col-md-3">
+                <input name="Programme" class="form-control form-control-lg"
+                       placeholder="Programme (BIT)" />
+            </div>
+
+            <div class="col-md-1">
+                <input name="IntakeYear" type="number"
+                       class="form-control form-control-lg"
+                       placeholder="Year" />
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    Add
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="card dashboard-card">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>User ID</th>
+                    <th>Matric No</th>
+                    <th>Programme</th>
+                    <th>Intake Year</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.StudentID</td>
+                    <td>@s.UserID</td>
+                    <td>@s.MatricNo</td>
+                    <td>@s.Programme</td>
+                    <td>@s.IntakeYear</td>
+                    <td class="text-end">
+                        <a asp-action="Delete"
+                           asp-route-id="@s.StudentID"
+                           class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Delete this student record?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

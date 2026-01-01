@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+
+                <h3 class="text-center text-primary mb-3">Create Account</h3>
+                <p class="text-center text-muted mb-4">
+                    Register to access SecureCampus
+                </p>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger text-center">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" name="role" required>
+                            <option value="Student">Student</option>
+                            <option value="Lecturer">Lecturer</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name</label>
+                            <input class="form-control" name="firstName" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input class="form-control" name="lastName" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control"
+                               type="email"
+                               name="email"
+                               placeholder="name@mmu.edu.my"
+                               required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input class="form-control"
+                               type="password"
+                               name="password"
+                               required />
+                    </div>
+
+                    <button class="btn btn-primary w-100 mt-2">
+                        Register
+                    </button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        Already have an account?
+                        <a asp-controller="Auth" asp-action="Login">Login</a>
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

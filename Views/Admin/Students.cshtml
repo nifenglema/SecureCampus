@@ -1,0 +1,38 @@
+﻿@model List<SecureCampusApp.Models.StudentProfile>
+
+@{
+    ViewData["Title"] = "Manage Students";
+}
+
+<h2>Manage Students</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Student ID</th>
+            <th>Matric No</th>
+            <th>Programme</th>
+            <th>Intake Year</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var s in Model)
+    {
+        <tr>
+            <td>@s.StudentID</td>
+            <td>@s.MatricNo</td>
+            <td>@s.Programme</td>
+            <td>@s.IntakeYear</td>
+            <td>
+                <a asp-action="DeleteStudent"
+                   asp-route-id="@s.StudentID"
+                   class="btn btn-sm btn-danger"
+                   onclick="return confirm('Delete this student?');">
+                    Delete
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

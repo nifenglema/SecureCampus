@@ -1,0 +1,21 @@
+﻿@{
+    var courses = ViewBag.Courses as List<SecureCampusApp.Models.Course>;
+}
+
+<h2>Enroll Students</h2>
+
+<form method="post" asp-action="EnrollStudent">
+    <label>Course</label>
+    <select name="courseId" required>
+        <option value="">-- Select Course --</option>
+        @foreach (var c in courses)
+        {
+            <option value="@c.CourseID">@c.CourseCode - @c.CourseName</option>
+        }
+    </select>
+
+    <label>StudentID</label>
+    <input name="studentId" placeholder="Paste StudentID here" required />
+
+    <button type="submit">Enroll</button>
+</form>

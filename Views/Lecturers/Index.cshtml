@@ -1,0 +1,83 @@
+﻿@model List<SecureCampusApp.Models.LecturerProfile>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Lecturer Management</h2>
+</div>
+
+<div class="card dashboard-card mb-4">
+    <div class="card-body">
+        <form asp-action="Create" method="post" class="row g-3">
+
+            <div class="col-md-2">
+                <input name="LecturerID"
+                       class="form-control form-control-lg"
+                       placeholder="Lecturer ID (L100)"
+                       required />
+            </div>
+
+            <div class="col-md-2">
+                <input name="UserID"
+                       class="form-control form-control-lg"
+                       placeholder="User ID (U300)"
+                       required />
+            </div>
+
+            <div class="col-md-3">
+                <input name="StaffNo"
+                       class="form-control form-control-lg"
+                       placeholder="Staff No"
+                       required />
+            </div>
+
+            <div class="col-md-3">
+                <input name="Department"
+                       class="form-control form-control-lg"
+                       placeholder="Department"
+                       required />
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <button type="submit"
+                        class="btn btn-primary btn-lg">
+                    Add
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="card dashboard-card">
+    <div class="card-body">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Lecturer ID</th>
+                    <th>User ID</th>
+                    <th>Staff No</th>
+                    <th>Department</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var l in Model)
+            {
+                <tr>
+                    <td>@l.LecturerID</td>
+                    <td>@l.UserID</td>
+                    <td>@l.StaffNo</td>
+                    <td>@l.Department</td>
+                    <td class="text-end">
+                        <a asp-action="Delete"
+                           asp-route-id="@l.LecturerID"
+                           class="btn btn-outline-danger btn-sm"
+                           onclick="return confirm('Delete this lecturer record?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
