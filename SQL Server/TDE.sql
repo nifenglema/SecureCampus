@@ -1,0 +1,21 @@
+USE SecureCampus;
+GO
+
+CREATE MASTER KEY
+ENCRYPTION BY PASSWORD = 'StrongSecureCampusDMK@123';
+GO
+
+USE SecureCampus;
+GO
+
+CREATE CERTIFICATE StudentICCert
+WITH SUBJECT = 'Student IC Encryption';
+GO
+
+USE SecureCampus;
+GO
+
+CREATE SYMMETRIC KEY StudentICKey
+WITH ALGORITHM = AES_256
+ENCRYPTION BY CERTIFICATE StudentICCert;
+GO
