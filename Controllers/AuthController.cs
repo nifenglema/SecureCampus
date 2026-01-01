@@ -86,7 +86,7 @@ namespace SecureCampusApp.Controllers
                 return View();
             }
 
-            // ✅ AUTO-create lecturer profile
+            // AUTO-create lecturer profile
             if (role == "Lecturer")
             {
                 var userId = _db.GetUserIdByEmail(email);
@@ -107,3 +107,4 @@ namespace SecureCampusApp.Controllers
     }
 
 }
+
