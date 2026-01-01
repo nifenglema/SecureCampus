@@ -38,6 +38,7 @@ namespace SecureCampusApp.Controllers
 
             HttpContext.Session.SetString("UserID", user.UserID);
             HttpContext.Session.SetString("Role", user.Role);
+            _db.CreateLoginSession(user.UserID);
 
             if (user.Role == "Student")
                 return RedirectToAction("Profile", "Students");
@@ -53,7 +54,7 @@ namespace SecureCampusApp.Controllers
         // =========================
         public IActionResult Register()
         {
-            return View();   // ✅ ONLY show page
+            return View();   
         }
 
         // =========================
@@ -104,4 +105,5 @@ namespace SecureCampusApp.Controllers
             return RedirectToAction("Index", "Home");
         }
     }
+
 }
