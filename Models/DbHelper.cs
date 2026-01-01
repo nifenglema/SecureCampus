@@ -19,6 +19,38 @@ namespace SecureCampusApp.Models
             _connectionString = connectionString;
         }
 
+        public void CreateLoginSession(string userId, int minutes = 30)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+        
+            var sessionId = Guid.NewGuid().ToString();
+            var cmd = new SqlCommand(@"
+                INSERT INTO LoginSession (SessionID, UserID, ExpiresAt, CreatedAt)
+                VALUES (@sid, @uid, DATEADD(MINUTE, @mins, GETDATE()), GETDATE());
+            ", conn);
+        
+            cmd.Parameters.AddWithValue("@sid", sessionId);
+            cmd.Parameters.AddWithValue("@uid", userId);
+            cmd.Parameters.AddWithValue("@mins", minutes);
+        
+            cmd.ExecuteNonQuery();
+        }
+        
+        public void EndLoginSession(string userId)
+        {
+            using var conn = new SqlConnection(_connectionString);
+            conn.Open();
+        
+            var cmd = new SqlCommand(@"
+                DELETE FROM LoginSession
+                WHERE UserID = @uid;
+            ", conn);
+        
+            cmd.Parameters.AddWithValue("@uid", userId);
+            cmd.ExecuteNonQuery();
+        }
+
         public string? GetUserIdByEmail(string email)
         {
             using var conn = new SqlConnection(_connectionString);
@@ -647,3 +679,4 @@ namespace SecureCampusApp.Models
 
     }
 }
+
